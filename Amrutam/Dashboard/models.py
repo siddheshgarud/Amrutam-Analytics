@@ -161,9 +161,12 @@ User - id , date_created_gmt , date_modified_gmt , email , first_name ,  last_na
 Product table - id , name , slug , permalink , date_created_gmt , date_modified_gmt , type , status , featured , catalog_visibility , short_description , sku , price , regular_price , sale_price , date_on_sale_from_gmt , date_on_sale_to_gmt , price_html , on_sale , purchasable , total_sales , downloadable , tax_status , stock_quantity , manage_stock , stock_status , backorders , backorders_allowed ,backordered , sold_individually , weight , reviews_allowed , average_rating , rating_count , categories , images , attributes , grouped_products 
 grouped_products - product_id , id 
 images - product_id , id , date_created_gmt , src , date_modified_gmt , 
-attributes - product_id , id , name , variation , 
+attributes -  id , name , variation , 
+product_attributes - id , attributes_id , product_id
+
 options - attributes_id , option_name
-categories - product_id , id , name , slug 
+categories -  , id , name , slug 
+product_categories -  , id , , product_id , catehory_id ,
 product_reviews - product_id , id , customer_id , date_created_gmt , status , reviewer , reviewer_email , review , rating , verified , ": {
          
 
@@ -171,6 +174,9 @@ coupon - order_id , id , code , amount , date_created_gmt , date_modified_gmt , 
 used_by - coupon_id , customer_id , id , order_id
 product_ids - coupon_id , product_id , id
 excluded_product_ids - coupon_id , product_id , id
+
+
+
 
 """
 
