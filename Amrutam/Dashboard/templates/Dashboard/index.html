@@ -1,7 +1,35 @@
 <!DOCTYPE html>
-{% block body %}
-<body>
+
+<html lang="en">
+  <head>
+
   {% load static %}
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Star Admin2 </title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{% static 'Dashboard/vendors/feather/feather.css' %}">
+  <link rel="stylesheet" href="{% static 'Dashboard/vendors/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'Dashboard/vendors/ti-icons/css/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'Dashboard/vendors/typicons/typicons.css' %}">
+  <link rel="stylesheet" href="{% static 'Dashboard/vendors/simple-line-icons/css/simple-line-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'Dashboard/vendors/css/vendor.bundle.base.css' %}">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="{% static 'Dashboard/vendors/datatables.net-bs4/dataTables.bootstrap4.css' %}">
+  <link rel="stylesheet" href="{% static 'Dashboard/js/select.dataTables.min.css' %}">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{% static 'Dashboard/css/vertical-layout-light/style.css' %}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{% static 'Dashboard/images/favicon.png' %}" />
+</head>
+<body>
+{% block body %}
+
+
+ 
   <div class="container-scroller">
     <div class="row p-0 m-0 proBanner" id="proBanner">
       <div class="col-md-12 p-0 m-0">
@@ -495,23 +523,23 @@
                       <div class="col-sm-12">
                         <div class="statistics-details d-flex align-items-center justify-content-between">
                           <div>
-                            <p class="statistics-title">Bounce Rate</p>
-                            <h3 class="rate-percentage">32.53%</h3>
+                            <p class="statistics-title">Orders</p>
+                            <h3 class="rate-percentage">{{orderscount}}</h3>
                             <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>-0.5%</span></p>
                           </div>
                           <div>
-                            <p class="statistics-title">Page Views</p>
-                            <h3 class="rate-percentage">7,682</h3>
+                            <p class="statistics-title">Success Orders</p>
+                            <h3 class="rate-percentage">{{ordersstatussuccesscount}}</h3>
                             <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+0.1%</span></p>
                           </div>
                           <div>
-                            <p class="statistics-title">New Sessions</p>
-                            <h3 class="rate-percentage">68.8</h3>
+                            <p class="statistics-title">cancelled Orders</p>
+                            <h3 class="rate-percentage">{{ordersstatusfailedcount}}</h3>
                             <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p>
                           </div>
                           <div class="d-none d-md-block">
-                            <p class="statistics-title">Avg. Time on Site</p>
-                            <h3 class="rate-percentage">2m:35s</h3>
+                            <p class="statistics-title">Processing Orders</p>
+                            <h3 class="rate-percentage">{{ordersstatusprocount}}</h3>
                             <p class="text-success d-flex"><i class="mdi mdi-menu-down"></i><span>+0.8%</span></p>
                           </div>
                           <div class="d-none d-md-block">
@@ -664,6 +692,8 @@
                                     <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new member</button>
                                   </div>
                                 </div>
+
+                                {% for i in latesttenorders %}
                                 <div class="table-responsive  mt-1">
                                   <table class="table select-table">
                                     <thead>
@@ -675,9 +705,10 @@
                                           </div>
                                         </th>
                                         <th>Customer</th>
-                                        <th>Company</th>
-                                        <th>Progress</th>
+                                        <th>Products</th>
+                                        <th>Value</th>
                                         <th>Status</th>
+                                        <th>Order Id</th>
                                       </tr>
                                     </thead>
                                     <tbody>
@@ -692,7 +723,7 @@
                                           <div class="d-flex ">
                                             <img src="images/faces/face1.jpg" alt="">
                                             <div>
-                                              <h6>Brandon Washington</h6>
+                                              <h6>{{i.name}}</h6>
                                               <p>Head admin</p>
                                             </div>
                                           </div>
@@ -849,6 +880,7 @@
                                     </tbody>
                                   </table>
                                 </div>
+                                {% endfor %}
                               </div>
                             </div>
                           </div>
@@ -1202,6 +1234,10 @@
   </div>
   <!-- container-scroller -->
 
+{% endblock %}
+
+
+
   <!-- plugins:js -->
   <script src="{% static 'Dashboard/vendors/js/vendor.bundle.base.js' %}"></script>
   <!-- endinject -->
@@ -1226,5 +1262,3 @@
 </body>
 
 </html>
-
-{% endblock %}

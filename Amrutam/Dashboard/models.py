@@ -38,13 +38,11 @@ class Customers(models.Model):
 
 
 
-
-
 class Line_items(models.Model):
   id = models.AutoField(primary_key=True)
-  customer_id = models.ForeignKey(Customers , on_delete=models.DO_NOTHING)
-  product = models.IntegerField(blank=True)
-  p_id = models.IntegerField(blank=True)
+  customer = models.ForeignKey(Customers , on_delete=models.DO_NOTHING  , blank = True  , null = True)
+  order = models.ForeignKey('Orders' , on_delete=models.DO_NOTHING , blank = True  , null = True )
+  product = models.ForeignKey('Products' , on_delete=models.DO_NOTHING )
   sku = models.CharField(max_length=50 , blank=True)
   name = models.CharField(max_length=100 , blank=True)
   variation_id = models.IntegerField(blank=True)
@@ -58,11 +56,14 @@ class Line_items(models.Model):
 
 
 
+
+
+
 class Orders(models.Model):
     id = models.AutoField(primary_key=True)
     email = models.CharField(max_length=100 , blank=True)
     phone = models.IntegerField(blank=True)
-    customer_id = models.IntegerField(blank=True)
+    customer = models.IntegerField(blank=True)
     line_items_id = models.IntegerField(blank=True)
     number = models.IntegerField(blank=True)
     status = models.CharField(max_length = 30 ,blank=True)
@@ -86,11 +87,51 @@ class Orders(models.Model):
     def __str__(self):
       return self.Order
 
+class Categories(models.Model):
+  id = models.AutoField(primary_key=True)
+  name = models.CharField(max_length=100 , blank=True)
+  slug = models.CharField(max_length=200 , blank=True)
+  def __str__(self):
+      return self.Categories
+
+class Attributes(models.Model):
+  id = models.AutoField(primary_key=True)
+  name = models.CharField(max_length=100 , blank=True)
+  slug = models.CharField(max_length=200 , blank=True)
+  def __str__(self):
+      return self.Attributes
+
+
+class Reviews(models.Model):
+  id = models.AutoField(primary_key=True)
+  customer_id   =  models.IntegerField(blank=True)
+  product_id =  models.IntegerField(blank=True)
+  date_created_gmt = models.DateField(blank=True)
+  status = models.CharField(max_length=100 , blank=True)
+  reviewer= models.CharField(max_length=100 , blank=True)
+  reviewer_email= models.CharField(max_length=100 , blank=True)
+  review = models.CharField(max_length=200 , blank=True)
+  rating = models.CharField(max_length=100 , blank=True)
+  verified = models.BooleanField()
+
+  def __str__(self):
+      return self.Product_reviews
+
+
+class Images(models.Model):
+  id = models.AutoField(primary_key=True)
+  date_created_gmt = models.DateField(blank=True)
+  src = models.CharField(max_length=200 , blank=True)
+  date_modified_gmt  = models.DateField(blank=True)
+  def __str__(self):
+      return self.Images
+
+
 class Products(models.Model):
   id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=400 , blank=True)
-  slug = models.URLField(max_length=300,blank=True )
-  permalink = models.URLField(max_length=300,blank=True )
+  slug = models.CharField(max_length=400 , blank=True)
+  permalink = models.CharField(max_length=400 , blank=True)
   date_created_gmt = models.DateField(blank=True)
   date_modified_gmt = models.DateField(blank=True)
   type = models.CharField(max_length=40 , blank=True)
@@ -122,13 +163,43 @@ class Products(models.Model):
   reviews_allowed  = models.BooleanField(blank=True)
   rating_count  = models.IntegerField(blank=True)
   categories = models.IntegerField(blank=True)
-  images = models.IntegerField(blank=True)
-  attributes = models.IntegerField(blank=True)
+  images  = models.IntegerField(blank=True)
+  attributes  = models.IntegerField(blank=True)
   
 
   def __str__(self):
       return self.Products
 
+class Product_Categories(models.Model):
+  id  = models.AutoField(primary_key=True)
+  product_id  = models.ForeignKey(Products, on_delete=models.DO_NOTHING)
+  category_id =  models.ForeignKey(Categories, on_delete=models.DO_NOTHING)
+  def __str__(self):
+      return self.Product_Categories
+
+
+class Product_Attributes(models.Model):
+  id  = models.AutoField(primary_key=True)
+  product_id  = models.ForeignKey(Products, on_delete=models.DO_NOTHING)
+  attributes_id =  models.ForeignKey(Attributes, on_delete=models.DO_NOTHING)
+  def __str__(self):
+      return self.Product_Categories
+
+class Product_Images(models.Model):
+  id  = models.AutoField(primary_key=True)
+  product_id  = models.ForeignKey(Products, on_delete=models.DO_NOTHING)
+  images_id =  models.ForeignKey(Images, on_delete=models.DO_NOTHING)
+  def __str__(self):
+      return self.Product_Images
+
+
+
+class Product_reviews(models.Model):
+  id  = models.AutoField(primary_key=True)
+  product_id  = models.ForeignKey(Products, on_delete=models.DO_NOTHING)
+  reviews_id =  models.ForeignKey(Reviews, on_delete=models.DO_NOTHING)
+  def __str__(self):
+      return self.Product_reviews
 
 """ 
 class Categories(models.Model):

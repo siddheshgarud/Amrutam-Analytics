@@ -640,7 +640,7 @@
           labels: ["Jan","Feb", "Mar", "Apr", "May"],
           datasets: [{
               label: 'Last week',
-              data: [18, 25, 39, 11, 24],
+              data: [180, 250, 390, 110, 24],
               backgroundColor: "#52CDFF",
               borderColor: [
                   '#52CDFF',
@@ -708,7 +708,7 @@
           labels: ["JAN","FEB", "MAR", "APR", "MAY"],
           datasets: [{
               label: 'Last week',
-              data: [18, 25, 39, 11, 24],
+              data: [180, 250, 390, 110, 240],
               backgroundColor: "#52CDFF",
               borderColor: [
                   '#52CDFF',

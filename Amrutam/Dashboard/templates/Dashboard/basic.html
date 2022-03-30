@@ -3,8 +3,8 @@
 
 
 <html lang="en">
-  {% load static %}
-<head>
+  <head>
+
   {% load static %}
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -27,3 +27,36 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="{% static 'Dashboard/images/favicon.png' %}" />
 </head>
+<body>
+{%block body %}
+
+
+
+
+{%endblock%}
+
+
+  <!-- plugins:js -->
+  <script src="{% static 'Dashboard/vendors/js/vendor.bundle.base.js' %}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="{% static 'Dashboard/vendors/chart.js/Chart.min.js' %}"></script>
+  <script src="{% static 'Dashboard/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js' %}"></script>
+  <script src="{% static 'Dashboard/vendors/progressbar.js/progressbar.min.js' %}"></script>
+
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="{% static 'Dashboard/js/off-canvas.js' %}"></script>
+  <script src="{% static 'Dashboard/js/hoverable-collapse.js' %}"></script>
+  <script src="{% static 'Dashboard/js/template.js' %}"></script>
+  <script src="{% static 'Dashboard/js/settings.js' %}"></script>
+  <script src="{% static 'Dashboard/js/todolist.js' %}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{% static 'Dashboard/js/jquery.cookie.js' %}"></script>
+  <script src="{% static 'Dashboard/js/dashboard.js' %}"></script>
+  <script src="{% static 'Dashboard/js/Chart.roundedBarCharts.js' %}"></script>
+  <!-- End custom js for this page-->
+</body>
+
+</html>

@@ -66,23 +66,31 @@ msql db - > insert """
 
 
 
-sql = "INSERT IGNORE INTO dashboard_orders (id , email , phone ,number,status , order_key , created_via , currency , payment_method , payment_method_title ,transaction_id	,date_paid_gmt , discount_total , discount_tax , shipping_tax , shipping_total , total_tax, total ,  date_created ,date_modified_gmt , customer_id , line_items_id	) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s ,%s ,%s , %s , %s ,%s,%s,%s , %s , %s , %s, %s)"
+sql = "INSERT IGNORE INTO dashboard_orders (id , email , phone ,number,status , order_key , created_via , currency , payment_method , payment_method_title ,transaction_id	,date_paid_gmt , discount_total , discount_tax , shipping_tax , shipping_total , total_tax, total ,  date_created ,date_modified_gmt , customer , line_items_id	) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s ,%s ,%s , %s , %s ,%s,%s,%s , %s , %s , %s, %s)"
 
+sql2 = "INSERT IGNORE INTO dashboard_line_items ( id ,  customer_id , order_id ,  product_id , name , variation_id, quantity,  tax_class , subtotal , subtotal_tax  ,total  ,total_tax ,  price 	) VALUES ( %s , %s ,%s ,%s , %s ,%s, %s ,%s , %s ,%s, %s ,%s,%s)"
 
-
-n = 0
+n = 215
 m = 2000
 x = 100
 while (n < m) and ( x != None) :
     n += 1
+    
     AllOrders = wcapi.get("orders", params = {'per_page' : x , 'page': n }).json() 
     for x_Dict in AllOrders:
+      
+      singlecust = wcapi.get(f"customers/{x_Dict['customer_id']}").json() 
 
-      val = ( x_Dict['id'],x_Dict['billing']['email'] ,x_Dict['billing']['phone']  ,x_Dict['number'],x_Dict['status'],x_Dict['order_key'],x_Dict['created_via'],x_Dict['currency'],x_Dict['payment_method'],x_Dict['payment_method_title'],x_Dict['transaction_id'],x_Dict['date_paid_gmt'],x_Dict['discount_total'],x_Dict['discount_tax'],x_Dict['shipping_tax'],x_Dict['shipping_total'],x_Dict['total_tax'],x_Dict['total'],x_Dict['date_created'],x_Dict['date_modified_gmt'],x_Dict['customer_id'],x_Dict['number'])
+      val = ( x_Dict['id'],Allcust['email'] ,x_Dict['billing']['phone']  ,x_Dict['number'],x_Dict['status'],x_Dict['order_key'],x_Dict['created_via'],x_Dict['currency'],x_Dict['payment_method'],x_Dict['payment_method_title'],x_Dict['transaction_id'],x_Dict['date_paid_gmt'],x_Dict['discount_total'],x_Dict['discount_tax'],x_Dict['shipping_tax'],x_Dict['shipping_total'],x_Dict['total_tax'],x_Dict['total'],x_Dict['date_created'],x_Dict['date_modified_gmt'],x_Dict['customer_id'],x_Dict['number'])
       db.execute(sql, val)
       mydb.commit()
       print(db.rowcount, "record inserted.")
+      for i in x_Dict['line_items']:
 
+          val2 = ( x_Dict['number'] ,  x_Dict['customer_id'], x_Dict['id'],  i['product_id'], i['name'], i['variation_id'], i['quantity'], i['tax_class'], i['subtotal'], i['subtotal_tax'], i['total'], i['total_tax'], i['price'] )
+          db.execute(sql2, val2)
+          mydb.commit()
+          print(db.rowcount, "record inserted.")
     print(n)
 
 

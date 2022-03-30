@@ -66,25 +66,26 @@ msql db - > insert """
 
 
 
-sql = "INSERT IGNORE INTO dashboard_line_items (id  ,	p_id ,	sku , name, variation_id , quantity , tax_class , 	address1,address2	,pincode, city	 , 	state , country , is_paying_customer , avatar_url, date_created_gmt ,  date_modified_gmt 	) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s ,%s ,%s , %s , %s ,%s,%s)"
+sql = "INSERT IGNORE INTO dashboard_line_items (  customer_id , order_id ,  product_id , name , variation_id, quantity,  tax_class , subtotal , subtotal_tax  ,total  ,total_tax ,  price 	) VALUES ( %s ,%s ,%s , %s ,%s, %s ,%s , %s ,%s, %s ,%s,%s)"
 
 
 
-n = 0
+n = 105
 m = 999999
 x = 100
 while (n < m) and ( x != None) :
     n += 1
     AllOrders = wcapi.get("orders", params = {'per_page' : x , 'page': n }).json() 
     for x_Dict in AllOrders:
+        for i in x_Dict['line_items']:
 
-      val = ( x_Dict['id'],x_Dict['username'],x_Dict['first_Name'],x_Dict['last_Name'],x_Dict['role'],x_Dict['email'],x_Dict['phone'],x_Dict['address1'],x_Dict['address2'],x_Dict['pincode'],x_Dict['city'],x_Dict['state'],x_Dict['country'],x_Dict['is_paying_customer'],x_Dict['avatar_url'],x_Dict['date_created_gmt'],x_Dict['date_modified_gmt'],x_Dict['address2'],x_Dict['date_created'],x_Dict['date_modified_gmt'],x_Dict['customer_id'],x_Dict['number'])
-      db.execute(sql, val)
-      mydb.commit()
-      print(db.rowcount, "record inserted.")
+          val = ( x_Dict['customer_id'], x_Dict['id'],  i['product_id'], i['name'], i['variation_id'], i['quantity'], i['tax_class'], i['subtotal'], i['subtotal_tax'], i['total'], i['total_tax'], i['price'] )
+          db.execute(sql, val)
+          mydb.commit()
+          print(db.rowcount, "record inserted.")
 
     print(n)
-    time.sleep(5)
+    
 
 
 

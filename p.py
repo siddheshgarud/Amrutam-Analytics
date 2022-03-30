@@ -60,9 +60,9 @@ msql db - > insert """
 
 
 
-sql = "INSERT IGNORE INTO dashboard_customers (id , name, slug, permalink,date_created_gmt ,date_modified_gmt, type ,status,featured, catalog_visibility, short_description, sku ,price, regular_price, sale_price, date_on_sale_from_gmt, date_on_sale_to_gmt on_sale,  price_html, purchasable , total_sales, downloadable, tax_status, stock_quantity, backorders, backorders_allowed, backordered, manage_stock ,stock_status, sold_individually, weight,  average_rating, reviews_allowed ,rating_count ,categories, images, attributes	) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s ,%s ,%s , %s , %s ,%s , %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s ,%s ,%s , %s , %s ,%s,%s ,%s , %s , %s ,%s )"
+sql = "INSERT IGNORE INTO dashboard_products (id , name, slug, permalink,date_created_gmt ,date_modified_gmt, type ,status,featured, catalog_visibility, short_description, sku ,price, regular_price, sale_price, date_on_sale_from_gmt, date_on_sale_to_gmt ,on_sale,  price_html, purchasable , total_sales, downloadable, tax_status, stock_quantity, backorders, backorders_allowed, backordered, manage_stock ,stock_status, sold_individually, weight,  average_rating, reviews_allowed ,rating_count 	) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s ,%s ,%s , %s , %s ,%s , %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s ,%s ,%s , %s , %s ,%s,%s ,%s )"
 
-
+37
 
 n = 0
 m = 999999
@@ -72,7 +72,7 @@ while (n < m) and ( x != None) :
     AllOrders = wcapi.get("products", params = {'per_page' : x , 'page': n }).json() 
     for x_Dict in AllOrders:
 
-      val = ( x_Dict['id'],x_Dict['name'],x_Dict['slug'],x_Dict['permalink'],x_Dict['date_created_gmt'],x_Dict['date_modified_gmt'],x_Dict['type'],x_Dict['status'],x_Dict['featured'],x_Dict['catalog_visibility'],x_Dict['short_description'],x_Dict['sku'],x_Dict['price'],x_Dict['regular_price'],x_Dict['sale_price'],x_Dict['date_on_sale_from_gmt'],x_Dict['date_on_sale_to_gmt'],x_Dict['on_sale'],x_Dict['price_html'],x_Dict['purchasable'],x_Dict['total_sales'],x_Dict['downloadable'],x_Dict['tax_status'],x_Dict['stock_quantity'],x_Dict['backorders'],x_Dict['backorders_allowed'],x_Dict['backordered'],x_Dict['manage_stock'],x_Dict['stock_status'],x_Dict['sold_individually'],x_Dict['weight'],x_Dict['average_rating'],x_Dict['reviews_allowed'],x_Dict['rating_count'],x_Dict['categories']['id'],x_Dict['images']['id'],x_Dict['attributes']['id'])
+      val = ( x_Dict['id'],x_Dict['name'],x_Dict['slug'],x_Dict['permalink'],x_Dict['date_created_gmt'],x_Dict['date_modified_gmt'],x_Dict['type'],x_Dict['status'],x_Dict['featured'],x_Dict['catalog_visibility'],x_Dict['short_description'],x_Dict['sku'],x_Dict['price'],x_Dict['regular_price'],x_Dict['sale_price'],x_Dict['date_on_sale_from_gmt'],x_Dict['date_on_sale_to_gmt'],x_Dict['on_sale'],x_Dict['price_html'],x_Dict['purchasable'],x_Dict['total_sales'],x_Dict['downloadable'],x_Dict['tax_status'],x_Dict['stock_quantity'],x_Dict['backorders'],x_Dict['backorders_allowed'],x_Dict['backordered'],x_Dict['manage_stock'],x_Dict['stock_status'],x_Dict['sold_individually'],x_Dict['weight'],x_Dict['average_rating'],x_Dict['reviews_allowed'],x_Dict['rating_count'])
       db.execute(sql, val)
       mydb.commit()
       print(db.rowcount, "record inserted.")
