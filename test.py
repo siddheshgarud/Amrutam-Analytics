@@ -84,16 +84,18 @@ myresult = db.fetchall()
 
 
 for i in myresult:
-  print(str(i).replace("()", ""))
-  AllOrders = wcapi.get(f"orders/{i}").json() 
-  sqlep = f"UPDATE dashboard_orders SET email = '{AllOrders['email']}', phone= '{AllOrders['phone'][:-10]}' WHERE id = {i};"
-  print(AllOrders['id'])
-  print(AllOrders['phone'][:-10])
-  print(AllOrders['email'])
-  db.execute(sqlep, val2)
-  mydb.commit()
-  print(db.rowcount, "record updated.")
-  time.sleep(2)
+  for j in i:
+    print(j)
+    AllOrders = wcapi.get(f"orders/{j}").json() 
+    sqlep = f"UPDATE dashboard_orders SET email = '{AllOrders['billing']['email']}', phone= '{AllOrders['billing']['phone'][:-10]}' WHERE id = {j};"
+    print(AllOrders['id'])
+    print(AllOrders['billing']['phone'][:-10])
+    print(AllOrders['billing']['email'])
+    db.execute(sqlep)
+    mydb.commit()
+    print(db.rowcount, "record updated.")
+    time.sleep(1)
+  
   
 """     n += 1
     AllOrders = wcapi.get("orders", params = {'per_page' : x , 'page': n }).json() 
